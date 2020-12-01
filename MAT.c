@@ -1,4 +1,4 @@
-//PROGRAM FOR MATRIX MULTIPLICATION
+//PROGRAM FOR MATRIX MULTIPLICATION 
 
 #include <stdio.h>
 #include<sys/types.h>
@@ -16,16 +16,13 @@ typedef struct ARG
 static int MAT3[10][10];
 int r1,c1,r2,c2;
 
-//void *thread_Multiply_Matrix(void *);
 void *mult(void *);
 int main()
 {
-   // sem_init(&mutex,0,0);
     int MAT1[10][10];
-	int MAT2[10][10];
-	//int MAT3[10][10];
+    int MAT2[10][10];
     
-    int res=0,p=0,tids=0,n;
+    int res=0,p=0,tids=0,n=0,o=0;
     pthread_t tid[100];
     ARG args; 
     int i,j,k;
@@ -67,8 +64,6 @@ int main()
             for(j=0;j<c2;j++)
                 MAT3[i][j]=0;
         
-        int o=0;
-        int m=0;
          for(o=0;o<r1;o++)
         {
            sleep(2);
@@ -76,27 +71,19 @@ int main()
            {         
            for(k=0;k<c1;k++)
            {
-                
                    args.M1=MAT1[o][0];
-                   //printf("%d",args.M1);
                    args.M2=MAT1[o][1];
                    args.M3=MAT2[0][0];
-                   //printf("%d",args.M2);
-                   
                    args.M4=MAT2[1][0];
                    args.M5=MAT2[0][1]; 
                    args.M6=MAT2[1][1]; 
                    args.r1=2;  
-                   // sleep(5);
-                    
                    }
-                   m=m+1;
              }        
            
              else if(r1==3)
            {         
                    args.M1=MAT1[o][0];
-                   //printf("%d",args.M1);
                    args.M2=MAT1[o][1];
                    args.M3=MAT1[o][2];
                    args.M4=MAT2[0][0];
@@ -117,21 +104,12 @@ int main()
         }
        
        n=0;
-       //pthread_mutex_lock(&locked);
        for(i=0;i<r1;i++)
-        {
-            
-                    
-                    pthread_join(tid[n++],NULL);
-                    //sleep(2);
-                      
-              
+        {        
+              pthread_join(tid[n++],NULL);       
         }
-        //pthread_mutex_unlock(&locked);  
-         
+       
     printf("thread finished ...");
-     
-        
     }
     
     printf("\n Matrix 1 \n");
@@ -177,24 +155,15 @@ void *mult(void *var)
    int i=0,j=0;
    
    ARG *tmp=(struct ARG *)var;
-   
-   
-             //for(j=0;j< tmp->r1;j++)
-            // {
-                    //sleep(2);
                     
-                    
-                    //sleep(2);
-                    //printf("Res: %d\n",res);
-                    
-               if(tmp->r1==2)  
-               {   
+        if(tmp->r1==2)  
+           {   
                     printf("Values are %d\t %d \t %d\t %d\t %d\t %d\n",tmp->M1,tmp->M2,tmp->M3,tmp->M4,tmp->M5,tmp->M6);
                     MAT3[si][0]=tmp->M1*tmp->M3 + tmp->M2*tmp->M4 ; 
                     MAT3[si][1]=tmp->M1*tmp->M5 + tmp->M2*tmp->M6 ; 
                     //res=0  ;    
-                 }   
-             //   }
+               }   
+            
             if(tmp->r1==3)
             { 
             printf("Values are %d\t %d \t %d\t %d\t %d\t %d\t %d\t %d\t %d\t %d\t %d\t %d\n",tmp->M1,tmp->M2,tmp->M3,tmp->M4,tmp->M5,tmp->M6,tmp->M7,tmp->M8,tmp->M9,tmp->M10,tmp->M11,tmp->M12);
